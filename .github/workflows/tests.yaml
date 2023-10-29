@@ -1,16 +1,16 @@
-name: Build all platforms
+name: Run tests
 
 on: [ push, pull_request ]
 
 jobs:
-  crossbuild:
+  test:
     strategy:
       matrix:
-        go-version: [ "1.21" ]
+        go-version: [ "1.20", "1.21" ]
         platform: [ "ubuntu-latest" ]
     runs-on: ${{ matrix.platform }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Build containers
-      run: make all-container GO_VERSION=${{ matrix.go-version }}
+    - name: Test
+      run: make test GOFLAGS="-v" GO_VERSION=${{ matrix.go-version }}

@@ -1,16 +1,15 @@
-name: Build all platforms
+name: Run lint
 
 on: [ push, pull_request ]
 
 jobs:
-  crossbuild:
+  lint:
     strategy:
       matrix:
-        go-version: [ "1.21" ]
         platform: [ "ubuntu-latest" ]
     runs-on: ${{ matrix.platform }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Build containers
-      run: make all-container GO_VERSION=${{ matrix.go-version }}
+    - name: Lint
+      run: make lint
